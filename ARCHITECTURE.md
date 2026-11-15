@@ -1,3 +1,5 @@
+> **Nota:** Documento elaborado con apoyo de inteligencia artificial, siguiendo las indicaciones y especificaciones proporcionadas por el estudiante.
+
 # Arquitectura de BarberTurn
 
 ## 1. Vision general

@@ -1,3 +1,5 @@
+> **Nota:** Documento elaborado con apoyo de inteligencia artificial, siguiendo las indicaciones y especificaciones proporcionadas por el estudiante.
+
 # BarberTurn
 
 Aplicacion web full stack para la gestion de citas de una peluqueria con un solo barbero. Permite a los clientes consultar servicios, ver horarios disponibles y reservar una cita; y al administrador iniciar sesion para gestionar agenda, servicios, horario de atencion y estadisticas del dia.

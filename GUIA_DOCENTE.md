@@ -1,3 +1,5 @@
+> **Nota:** Esta guía fue elaborada con apoyo de inteligencia artificial, siguiendo las indicaciones y especificaciones proporcionadas por el estudiante, con el propósito de facilitarle al docente la instalación, ejecución y evaluación del proyecto.
+
 # Guia rapida para el docente
 
 BarberTurn es una aplicacion full stack de agendamiento para una peluqueria. Esta guia permite ejecutar y evaluar el proyecto desde cero sin revisar el codigo previamente.
