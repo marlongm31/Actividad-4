@@ -1,0 +1,40 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: barberturn
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/barberturn?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota}
+    username: ${DB_USERNAME:barberturn}
+    password: ${DB_PASSWORD:barberturn}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  jackson:
+    time-zone: America/Bogota
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:barberturn-desarrollo-clave-secreta-de-al-menos-32-caracteres-2026}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:480}
+  admin:
+    email: ${ADMIN_EMAIL:admin@barberturn.com}
+    password: ${ADMIN_PASSWORD:BarberTurn2026!}
+    name: ${ADMIN_NAME:Administrador BarberTurn}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+
+logging:
+  level:
+    root: INFO
+    com.barberturn: INFO
