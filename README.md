@@ -4,6 +4,8 @@ Aplicacion web full stack para la gestion de citas de una peluqueria con un solo
 
 Proyecto desarrollado para la **Actividad 4** de **Topicos Avanzados de Software**, aplicando Arquitectura Hexagonal, principios SOLID, Clean Code y Refactoring.
 
+> **Docente:** la guia de evaluacion paso a paso esta en [GUIA_DOCENTE.md](GUIA_DOCENTE.md).
+
 ## Funcionalidades
 
 ### Zona publica
@@ -66,6 +68,7 @@ La explicacion detallada, los flujos y la aplicacion de SOLID estan en [ARCHITEC
 ├── database/                     Script de creacion de base y usuario
 ├── scripts/                      Arranque y parada de MySQL local
 ├── ARCHITECTURE.md               Documento de arquitectura y decisiones
+├── GUIA_DOCENTE.md               Guia de evaluacion paso a paso
 └── README.md
 ```
 
@@ -74,7 +77,7 @@ La explicacion detallada, los flujos y la aplicacion de SOLID estan en [ARCHITEC
 - Java 21
 - Maven 3.9+
 - Node.js 20+ y npm
-- MySQL 8 (servicio local o instancia en puerto 3307)
+- MySQL 8 en `localhost:3306` (o una instancia propia configurada con `DB_URL`)
 
 ## Puesta en marcha
 
@@ -83,14 +86,20 @@ La explicacion detallada, los flujos y la aplicacion de SOLID estan en [ARCHITEC
 El backend usa por defecto:
 
 ```text
-jdbc:mysql://localhost:3307/barberturn
+jdbc:mysql://localhost:3306/barberturn
 usuario: barberturn
 contrasena: barberturn
 ```
 
-Si ya tienes MySQL en el puerto 3306, ejecuta [database/01_create_database.sql](database/01_create_database.sql) y define `DB_URL` con el puerto correspondiente.
+Ejecuta el script para crear la base y el usuario:
 
-Si no puedes iniciar el servicio MySQL de Windows, este repositorio incluye una instancia local aislada en el puerto 3307:
+```bash
+mysql -u root -p < database/01_create_database.sql
+```
+
+Si usas otro puerto, host o credenciales, define `DB_URL`, `DB_USERNAME` y `DB_PASSWORD` antes de arrancar el backend.
+
+Si no puedes iniciar el servicio MySQL de Windows, este repositorio incluye una instancia local aislada en el puerto 3306:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/start-local-mysql.ps1
@@ -100,6 +109,13 @@ El script crea el directorio de datos en `.local/mysql-data`, inicializa MySQL s
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/stop-local-mysql.ps1
+```
+
+Si el puerto 3306 ya esta ocupado, arranca la instancia local en otro puerto y configura el backend:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/start-local-mysql.ps1 -Port 3307
+$env:DB_URL="jdbc:mysql://localhost:3307/barberturn?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota"
 ```
 
 ### 2. Backend
@@ -136,7 +152,7 @@ Variables de entorno soportadas por el backend:
 | Variable | Valor por defecto | Descripcion |
 | --- | --- | --- |
 | `SERVER_PORT` | `8080` | Puerto de la API |
-| `DB_URL` | `jdbc:mysql://localhost:3307/barberturn?...` | URL JDBC |
+| `DB_URL` | `jdbc:mysql://localhost:3306/barberturn?...` | URL JDBC |
 | `DB_USERNAME` | `barberturn` | Usuario de base de datos |
 | `DB_PASSWORD` | `barberturn` | Contrasena de base de datos |
 | `JWT_SECRET` | Clave de desarrollo | Secreto para firmar JWT (minimo 32 caracteres) |
@@ -277,7 +293,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local-mysql.ps1
 Verifica que MySQL escuche en el puerto configurado:
 
 ```powershell
-Test-NetConnection localhost -Port 3307
+Test-NetConnection localhost -Port 3306
 ```
 
 **Cambiar de puerto**
@@ -285,7 +301,7 @@ Test-NetConnection localhost -Port 3307
 Define `DB_URL` antes de arrancar el backend:
 
 ```powershell
-$env:DB_URL="jdbc:mysql://localhost:3306/barberturn?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota"
+$env:DB_URL="jdbc:mysql://localhost:3307/barberturn?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota"
 mvn spring-boot:run
 ```
 
